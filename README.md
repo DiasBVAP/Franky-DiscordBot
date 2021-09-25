@@ -9,9 +9,9 @@ You'll need a second Discord account running on your web browser.
 
 ### Requirements
 
-You'll need [Python](https://www.python.org/downloads/) (any Python 3.x should be fine). 
-You'll also need [VB-Audio's Virtual Cable](https://vb-audio.com/Cable/).
-And most likely an [additional Discord account](https://discord.com/register).
+- You'll need [Python](https://www.python.org/downloads/) (any Python 3.x should be fine). 
+- You'll also need [VB-Audio's Virtual Cable](https://vb-audio.com/Cable/).
+- And most likely an [additional Discord account](https://discord.com/register).
 
 ### Setup
 
