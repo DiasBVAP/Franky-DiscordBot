@@ -1,4 +1,3 @@
-*.txt
 *.wav
 .env
 __pycache__
