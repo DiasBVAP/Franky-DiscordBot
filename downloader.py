@@ -4,7 +4,7 @@ import youtube_dl
 def download_music(url: str):
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': 'teste',
+        'outtmpl': 'teste.%(etx)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'wav',
