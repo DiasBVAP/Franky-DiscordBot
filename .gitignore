@@ -1,5 +1,4 @@
 *.wav
-.env
 __pycache__
 deprecated
 local variables
