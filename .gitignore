@@ -1,0 +1,7 @@
+*.txt
+*.wav
+.env
+__pycache__
+deprecated
+local variables
+testing
