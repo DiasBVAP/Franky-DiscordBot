@@ -22,7 +22,6 @@ def main():
         if q.full():
             message = q.get()
             if PLAY in message:
-                print('got it')
                 if 'youtube.com' in message:
                     linkIndex = message.index('youtube')
                     link = message[linkIndex:]
@@ -31,7 +30,7 @@ def main():
                 elif len(message) == len(PLAY):
                     player.unpause_music()
                 else:
-                    searchIndex = len(PLAY)
+                    searchIndex = len(PLAY) + 1
                     searchTerm = message[searchIndex:]
                     link = searcher.search_video(searchTerm)
                     downloader.download_music(link)
