@@ -6,6 +6,13 @@ def play_music(fileName: str):
     mixer.music.load(fileName)
     mixer.music.set_volume(1.0)
     mixer.music.play()
-    while mixer.music.get_busy(): 
-        time.sleep(1)
+
+def pause_music():
+    mixer.music.pause()
+
+def stop_music():
+    mixer.music.stop()
     mixer.quit()
+
+def unpause_music():
+    mixer.music.unpause()
