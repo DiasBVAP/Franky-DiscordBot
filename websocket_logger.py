@@ -50,7 +50,7 @@ def initialize(q):
         event = recieve_json_response(ws)
 
         try:
-            q.put(f"{event['d']['author']['username']}: {event['d']['content']}")
+            q.put(f"{event['d']['content']}")
             op_code = event['op']
             if op_code == 11:
                 print('heartbeat received')
