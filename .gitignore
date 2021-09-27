@@ -1,5 +1,5 @@
-*.wav
 __pycache__
 deprecated
 local variables
 testing
+cache
