@@ -1,0 +1,23 @@
+from __future__ import unicode_literals
+from requests import get
+import youtube_dl
+
+
+def get_video(arg: str) -> str:
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': 'cache/%(title)s.%(etx)s',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+            'preferredquality': '192',
+        }],
+    }
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        try:
+            get(arg) 
+        except:
+            video = ydl.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]['title']
+        else:
+            video = ydl.extract_info(arg, download=True)['title']
+    return video
