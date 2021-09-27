@@ -2,6 +2,7 @@ import downloader
 import player
 import websocket_logger
 import searcher
+import message_sender
 
 import threading
 import queue
@@ -27,18 +28,23 @@ def main():
                     link = message[linkIndex:]
                     downloader.download_music(link)
                     player.play_music('teste.wav')
+                    message_sender.send_message('Playing Track!')
                 elif len(message) == len(PLAY):
                     player.unpause_music()
+                    message_sender.send_message('Rusuming Track!')
                 else:
                     searchIndex = len(PLAY) + 1
                     searchTerm = message[searchIndex:]
                     link = searcher.search_video(searchTerm)
                     downloader.download_music(link)
                     player.play_music('teste.wav')
+                    message_sender.send_message('Playing Track!')
             elif PAUSE in message:
                 player.pause_music()
+                message_sender.send_message('Track Paused!')
             elif STOP in message:
                 player.stop_music()
+                message_sender.send_message('Track Stopped!')
 
 
 if __name__ == "__main__":
