@@ -1,7 +1,6 @@
-import downloader
+import youtube_handler
 import player
 import websocket_logger
-import searcher
 import message_sender
 
 import threading
@@ -14,37 +13,31 @@ STOP = '!!stop'
 
 def main():
     q = queue.Queue(1)
-    message = ''
 
     t1 = threading.Thread(target=websocket_logger.initialize, args=(q,))
     t1.start()
+
+    songName = ''
 
     while True:
         if q.full():
             message = q.get()
             if PLAY in message:
-                if 'youtube.com' in message:
-                    linkIndex = message.index('youtube')
-                    link = message[linkIndex:]
-                    downloader.download_music(link)
-                    player.play_music('teste.wav')
-                    message_sender.send_message('Playing Track!')
-                elif len(message) == len(PLAY):
+                if len(message) == len(PLAY):
                     player.unpause_music()
-                    message_sender.send_message('Resuming Track!')
+                    message_sender.send_message('Resuming ' + '**' + songName + '**')
                 else:
-                    searchIndex = len(PLAY) + 1
-                    searchTerm = message[searchIndex:]
-                    link = searcher.search_video(searchTerm)
-                    downloader.download_music(link)
-                    player.play_music('teste.wav')
-                    message_sender.send_message('Playing Track!')
+                    payloadIndex = len(PLAY) + 1
+                    payload = message[payloadIndex:]
+                    songName = youtube_handler.get_video(payload)
+                    player.play_music(songName + '.wav')
+                    message_sender.send_message('Playing ' + '**' + songName + '**')
             elif PAUSE in message:
                 player.pause_music()
-                message_sender.send_message('Track Paused!')
+                message_sender.send_message('Paused ' + '**' + songName + '**')
             elif STOP in message:
                 player.stop_music()
-                message_sender.send_message('Track Stopped!')
+                message_sender.send_message('**Track Stopped!**')
 
 
 if __name__ == "__main__":
