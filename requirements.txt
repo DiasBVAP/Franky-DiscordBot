@@ -3,3 +3,4 @@ pygame
 websocket-client
 python-dotenv
 youtube-search
+requests
