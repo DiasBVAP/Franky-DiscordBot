@@ -31,7 +31,7 @@ def main():
                     message_sender.send_message('Playing Track!')
                 elif len(message) == len(PLAY):
                     player.unpause_music()
-                    message_sender.send_message('Rusuming Track!')
+                    message_sender.send_message('Resuming Track!')
                 else:
                     searchIndex = len(PLAY) + 1
                     searchTerm = message[searchIndex:]
