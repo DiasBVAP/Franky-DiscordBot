@@ -28,3 +28,9 @@ def unpause_music():
         mixer.music.unpause()
     except:
         pass
+def loop_music():
+    try:
+        pos = mixer.music.get_pos() / 1000.0
+        mixer.music.play(-1, pos)
+    except:
+        pass
