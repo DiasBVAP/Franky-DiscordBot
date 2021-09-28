@@ -25,16 +25,16 @@ def main():
             if PLAY in message:
                 if len(message) == len(PLAY):
                     player.unpause_music()
-                    message_sender.send_message('Resuming ' + '**' + songName + '**')
+                    message_sender.send_message(f'Resuming **{songName}**')
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
                     songName = youtube_handler.get_video(payload)
-                    player.play_music(songName + '.wav')
-                    message_sender.send_message('Playing ' + '**' + songName + '**')
+                    player.play_music(f'cache/{songName}.wav')
+                    message_sender.send_message(f'Playing **{songName}**')
             elif PAUSE in message:
                 player.pause_music()
-                message_sender.send_message('Paused ' + '**' + songName + '**')
+                message_sender.send_message(f'Paused **{songName}**')
             elif STOP in message:
                 player.stop_music()
                 message_sender.send_message('**Track Stopped!**')
