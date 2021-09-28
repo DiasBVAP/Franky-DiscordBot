@@ -41,7 +41,7 @@ def main():
                 message_sender.send_message('**Track Stopped!**')
             elif LOOP in message:
                 player.loop_music()
-                message_sender.send_message('**Looping ON!**')
+                message_sender.send_message(f'Looping **{songName}**')
 
 
 if __name__ == "__main__":
