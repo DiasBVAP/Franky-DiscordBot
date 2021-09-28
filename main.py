@@ -10,6 +10,7 @@ import queue
 PLAY = '!!play'
 PAUSE = '!!pause'
 STOP = '!!stop'
+LOOP = '!!loop'
 
 def main():
     q = queue.Queue(1)
@@ -30,7 +31,7 @@ def main():
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
                     songName = youtube_handler.get_video(payload)
-                    player.play_music(f'cache/{songName}.wav')
+                    player.play_music(f'cache/{songName}.mp3')
                     message_sender.send_message(f'Playing **{songName}**')
             elif PAUSE in message:
                 player.pause_music()
@@ -38,6 +39,9 @@ def main():
             elif STOP in message:
                 player.stop_music()
                 message_sender.send_message('**Track Stopped!**')
+            elif LOOP in message:
+                player.loop_music()
+                message_sender.send_message('**Looping ON!**')
 
 
 if __name__ == "__main__":

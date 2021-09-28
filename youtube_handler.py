@@ -9,7 +9,7 @@ def get_video(arg: str) -> str:
         'outtmpl': 'cache/%(title)s.%(etx)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'wav',
+            'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
     }
