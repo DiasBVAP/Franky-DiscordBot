@@ -13,6 +13,7 @@ Franky is able to respond to the following commands:
 - ```!!play```: If a song is paused it will unpause it, otherwise do nothing.
 - ```!!pause```: If a song is playing it will pause it, otherwise do nothing.
 - ```!!stop```: It will stop the current song so you can request a new one.
+- ```!!loop```: Starts looping the song currently playing. To stop looping simply stop the song.
 
 ## Windows Installation
 
