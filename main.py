@@ -2,6 +2,7 @@ import youtube_handler
 import player
 import websocket_logger
 import message_sender
+import cache_manager
 
 import threading
 import queue
@@ -36,6 +37,7 @@ def main():
                     songID = songDict['id']
                     player.play_music(f'cache/{songID}.mp3')
                     message_sender.send_message(f'Playing **{songName}**')
+                    cache_manager.clean_cache()
             elif PAUSE in message:
                 player.pause_music()
                 message_sender.send_message(f'Paused **{songName}**')
