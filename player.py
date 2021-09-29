@@ -1,5 +1,4 @@
 from pygame import mixer
-import time
 
 def play_music(fileName: str):
     try:
