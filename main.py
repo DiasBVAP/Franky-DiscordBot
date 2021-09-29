@@ -30,6 +30,7 @@ def main():
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
+                    message_sender.send_message('**Downloading . . .**')
                     songDict = youtube_handler.get_video(payload)
                     songName = songDict['title']
                     songID = songDict['id']
