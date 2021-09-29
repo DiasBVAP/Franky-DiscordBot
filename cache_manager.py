@@ -23,5 +23,3 @@ def get_oldest_file(folder: str) -> None:
         if os.path.getctime('cache/' + file) > os.path.getctime(oldestFile):
             oldestFile = file
     return oldestFile
-
-clean_cache()
