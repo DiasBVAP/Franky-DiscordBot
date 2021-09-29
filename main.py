@@ -30,8 +30,10 @@ def main():
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
-                    songName = youtube_handler.get_video(payload)
-                    player.play_music(f'cache/{songName}.mp3')
+                    songDict = youtube_handler.get_video(payload)
+                    songName = songDict['title']
+                    songID = songDict['id']
+                    player.play_music(f'cache/{songID}.mp3')
                     message_sender.send_message(f'Playing **{songName}**')
             elif PAUSE in message:
                 player.pause_music()
