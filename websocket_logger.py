@@ -5,7 +5,7 @@ import time
 import os
 from dotenv import load_dotenv
 
-def send_json_request(ws, request):
+def send_json_request(ws, request) -> None:
     ws.send(json.dumps(request))
 
 def recieve_json_response(ws):
@@ -13,7 +13,7 @@ def recieve_json_response(ws):
     if response:
         return json.loads(response)
 
-def heartbeat(interval, ws):
+def heartbeat(interval, ws) -> None:
     print('Heartbeat begin')
     while True:
         time.sleep(interval)
@@ -24,7 +24,7 @@ def heartbeat(interval, ws):
         send_json_request(ws, heartbeatJSON)
         print("Heartbeat sent")
 
-def initialize(q):
+def initialize(q) -> None:
     load_dotenv()
     ws = websocket.WebSocket()
     ws.connect('wss://gateway.discord.gg/?v=6&encording=json')
