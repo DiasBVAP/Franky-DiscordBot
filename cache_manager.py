@@ -23,3 +23,9 @@ def get_oldest_file(folder: str) -> None:
         if os.path.getctime('cache/' + file) > os.path.getctime(oldestFile):
             oldestFile = file
     return oldestFile
+
+def is_in_cache(target: str) -> bool:
+    for file in os.listdir('cache'):
+        if target + '.mp3' == file:
+            return True
+    return False
