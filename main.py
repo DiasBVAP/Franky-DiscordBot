@@ -1,11 +1,11 @@
+import threading
+import queue
+
 import youtube_handler
 import player
 import websocket_logger
 import message_sender
 import cache_manager
-
-import threading
-import queue
 
 #KEYWORDS DECLARATION
 PLAY = '!!play'
@@ -31,7 +31,6 @@ def main():
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
-                    message_sender.send_message('**Downloading . . .**')
                     songDict = youtube_handler.get_video(payload)
                     songName = songDict['title']
                     songID = songDict['id']
