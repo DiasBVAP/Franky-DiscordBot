@@ -9,6 +9,9 @@ def clean_cache() -> None:
     if cache_size > MAX_CACHE_SIZE:
         oldestFile = get_oldest_file('cache')
         os.remove('cache/' + oldestFile)
+    #remove anything that isn't .mp3
+    for file in os.listdir('cache'):
+        if not ('.mp3' in file): os.remove('cache/' + file)
 
 def get_folder_size(folder: str) -> float:
     sizeBytes = 0
