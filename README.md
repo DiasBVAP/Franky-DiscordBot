@@ -2,8 +2,7 @@
 
 ## Who's Franky?
 
-Franky is a barebones pseudo-bot that runs localy on your machine.
-You'll need a second Discord account running on your web browser.
+Franky is a music Discord selfbot/userbot (it automates an user account to act as a bot and play music).
 
 ## What can Franky do?
 
@@ -37,7 +36,7 @@ You'll need:
 ### Deploying the Bot
 
 1. With the browser of your choice, open discord and login with your secondary account.
-2. Mute your input audio (:headphones:).
+2. Mute your output audio (:headphones:).
 3. Go to **User Settings > Voice and Video**.
 4. Change *Input Device* to *CABLE Input (VB-Audio Virtual Cable)*.
 5. Disable all of Discord's audio processing options.
