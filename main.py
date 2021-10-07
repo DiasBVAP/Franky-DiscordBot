@@ -14,7 +14,7 @@ STOP = '!!stop'
 LOOP = '!!loop'
 NEXT = '!!next'
 LAST = '!!last'
-QUEUE = '!!queue'
+QUEUE = '!!q'
 DEBUG = '!!debug'
 
 def main():
@@ -34,13 +34,8 @@ def main():
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
                     songDict = youtube_handler.get_video(payload)
-                    #debug
-                    #print(songDict)
-                    Player.add_to_queue(songDict)
-                    #songName = songDict['title']
-                    #songID = songDict['id']
-                    #Player.play(f'cache/{songID}.mp3')
-                    #message_sender.send_message(f'Playing **{songName}**')
+                    songName = Player.add_to_queue(songDict)
+                    message_sender.send_message(f'Added to queue:\n**{songName}**')
                     cache_manager.clean_cache()
 
             elif PAUSE in message:
@@ -54,14 +49,14 @@ def main():
 
             elif NEXT in message:
                 songName = Player.play_next()
-                message_sender.send_message(f'Playing next song: **{songName}**')
+                message_sender.send_message(f'Playing next song:\n**{songName}**')
 
             elif LAST in message:
                 songName = Player.play_last()
-                message_sender.send_message(f'Playing last song: **{songName}**')
+                message_sender.send_message(f'Playing last song:\n**{songName}**')
 
             elif QUEUE in message:
-                message_sender.send_message(Player.get_queue())
+                message_sender.send_message(f'**{Player.get_queue()}**')
 
             elif DEBUG in message:
                 message_sender.send_message(Player.debug())
