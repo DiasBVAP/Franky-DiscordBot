@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
-def send_message(message: str) -> None:
+def send(message: str) -> None:
     load_dotenv()
     payload = {
         'content': message
