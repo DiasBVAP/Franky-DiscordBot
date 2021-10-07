@@ -3,13 +3,12 @@ from dotenv import load_dotenv
 
 def clean_cache() -> None:
     load_dotenv()
-    MAX_CACHE_SIZE = int(os.environ.get('MAX_CACHE_SIZE'))
+    MAX_CACHE_SIZE = float(os.environ.get('MAX_CACHE_SIZE'))
 
     cache_size = get_folder_size('cache')
     if cache_size > MAX_CACHE_SIZE:
         oldestFile = get_oldest_file('cache')
         os.remove('cache/' + oldestFile)
-    #remove anything that isn't .mp3
     for file in os.listdir('cache'):
         if not ('.mp3' in file): os.remove('cache/' + file)
 
@@ -17,7 +16,7 @@ def get_folder_size(folder: str) -> float:
     sizeBytes = 0
     for file in os.listdir(folder):
         sizeBytes += os.path.getsize('cache/' + file)
-    sizeMega = sizeBytes / (1024 * 1024)
+    sizeMega = float(sizeBytes) / float(1024 * 1024)
     return sizeMega
 
 def get_oldest_file(folder: str) -> None:
