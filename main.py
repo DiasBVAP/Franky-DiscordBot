@@ -12,7 +12,8 @@ PLAY = '!!play'
 PAUSE = '!!pause'
 STOP = '!!stop'
 LOOP = '!!loop'
-SKIP = '!!skip'
+NEXT = '!!next'
+LAST = '!!last'
 QUEUE = '!!queue'
 DEBUG = '!!debug'
 
@@ -33,6 +34,8 @@ def main():
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
                     songDict = youtube_handler.get_video(payload)
+                    #debug
+                    #print(songDict)
                     Player.add_to_queue(songDict)
                     #songName = songDict['title']
                     #songID = songDict['id']
@@ -44,13 +47,18 @@ def main():
                 if Player.pause(): message_sender.send_message(f'Paused **{songName}**')
 
             elif STOP in message:
-                if Player.stop(): message_sender.send_message('**Track Stopped!**')
+                if Player.stop(): message_sender.send_message('**Queue Stopped!**')
 
             elif LOOP in message:
                 if Player.loop(): message_sender.send_message(f'Looping **{songName}**')
 
-            elif SKIP in message:
-                if Player.play_next(): message_sender.send_message(f'Skipped **{songName}**')
+            elif NEXT in message:
+                songName = Player.play_next()
+                message_sender.send_message(f'Playing next song: **{songName}**')
+
+            elif LAST in message:
+                songName = Player.play_last()
+                message_sender.send_message(f'Playing last song: **{songName}**')
 
             elif QUEUE in message:
                 message_sender.send_message(Player.get_queue())
@@ -58,7 +66,7 @@ def main():
             elif DEBUG in message:
                 message_sender.send_message(Player.debug())
             
-        Player.update()
+        songName = Player.update()
 
 
 if __name__ == "__main__":
