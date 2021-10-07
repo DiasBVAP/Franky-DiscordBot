@@ -14,6 +14,24 @@ class MyQueue():
     def last(cls) -> None:
         pass
 
+    @classmethod
+    def add(cls, songDict: dict) -> None:
+        cls.myQueue.append(songDict)
+
+    @classmethod
+    def remove(cls, songName: str) -> None:
+        pass
+
+    @classmethod
+    def get_len(cls) -> int:
+        return len(cls.myQueue)
+
+    @classmethod
+    def get_title(cls) -> str:
+        return cls.myQueue[cls.current_song]['title']
+    
+
+
 class Player():
 
     #flags
@@ -60,19 +78,29 @@ class Player():
 
 
     @classmethod
-    def add_to_queue(cls, songDict: dict) -> None:
+    def add_to_queue(cls, songDict: dict) -> str:
         cls.myQueue.append(songDict)
         if not (cls.is_playing and cls.is_loaded): 
             songID = songDict['id']
             cls.play(f'cache/{songID}.mp3')
+        return songDict['title']
 
     @classmethod
-    def remove_from_queue(cls, songDict: dict) -> None:
+    def remove_from_queue(cls, songDict: dict) -> str:
         cls.myQueue.remove(songDict)
+        return songDict['title']
 
     @classmethod
-    def get_queue(cls) -> list:
-        return cls.myQueue
+    def get_queue(cls) -> str:
+        if len(cls.myQueue) > 0:
+            nameList = []
+            i = 1
+            for song in cls.myQueue:
+                nameList.append(str(i) + '. ' + song['title'])
+                i += 1
+            return '\n'.join(nameList)
+        else:
+            return 'Queue empty!'
 
     @classmethod
     def play(cls, fileName: str) -> None:
@@ -96,6 +124,8 @@ class Player():
         if cls.is_loaded:
             mixer.music.stop()
             mixer.quit()
+            cls.myQueue.clear()
+            cls.current_song = 0
             cls.is_loaded = False
             return True
         return False
