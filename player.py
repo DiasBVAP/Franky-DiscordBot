@@ -31,13 +31,14 @@ class MyQueue():
         return cls.myQueue[cls.current_song]['title']
     
 
-
 class Player():
 
     #flags
     is_loaded = False
     is_playing = False
     music_ended = False
+    queue_looping = False
+    on_queue = False
 
     #queue
     myQueue = []
@@ -45,8 +46,14 @@ class Player():
 
     @classmethod
     def update(cls) -> str:
-        if cls.is_playing and cls.is_loaded and (not mixer.music.get_busy()): cls.music_ended = True
+        if cls.is_playing and cls.is_loaded and (not mixer.music.get_busy()): 
+            cls.music_ended = True
+
         if cls.music_ended:
+            if (not cls.queue_looping) and (cls.current_song == len(cls.myQueue) - 1): # If on queue, but not looping
+                return ''
+            if not cls.on_queue: # If not on queue
+                return ''
             cls.play_next()
             cls.music_ended = False
         if len(cls.myQueue) > 0: return cls.myQueue[cls.current_song]['title']
@@ -62,6 +69,7 @@ class Player():
             songID = cls.myQueue[0]['id']
             cls.play(f'cache/{songID}.mp3')
             cls.current_song = 0
+        cls.on_queue = True
         return cls.myQueue[cls.current_song]['title']
 
     @classmethod
@@ -74,21 +82,27 @@ class Player():
             songID = cls.myQueue[len(cls.myQueue) - 1]['id']
             cls.play(f'cache/{songID}.mp3')
             cls.current_song = len(cls.myQueue) - 1
+        cls.on_queue = True
         return cls.myQueue[cls.current_song]['title']
-
 
     @classmethod
     def add_to_queue(cls, songDict: dict) -> str:
         cls.myQueue.append(songDict)
-        if not (cls.is_playing and cls.is_loaded): 
+        if not (cls.is_playing or cls.is_loaded): 
             songID = songDict['id']
             cls.play(f'cache/{songID}.mp3')
+            cls.on_queue = True
         return songDict['title']
 
     @classmethod
-    def remove_from_queue(cls, songDict: dict) -> str:
-        cls.myQueue.remove(songDict)
-        return songDict['title']
+    def remove_from_queue(cls, songIndex: int) -> str:
+        if len(cls.myQueue) > 1:
+            songName = cls.myQueue.pop(songIndex)['title']
+            if songIndex == cls.current_song: 
+                cls.current_song -= 1
+                Player.play_next()
+            return songName
+        else: return None
 
     @classmethod
     def get_queue(cls) -> str:
@@ -147,10 +161,6 @@ class Player():
         return False
 
     @classmethod
-    def debug(cls) -> str:
-        busy = None
-        try:
-            busy = mixer.music.get_busy()
-        except:
-            pass
-        return f'is_loaded: {cls.is_loaded}\nis_playing: {cls.is_playing}\nget_busy: {busy}'
+    def flip_qloop(cls) -> bool:
+        cls.queue_looping = not cls.queue_looping
+        return cls.queue_looping    
