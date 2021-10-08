@@ -1,5 +1,6 @@
 import threading
 import queue
+import os
 
 import youtube_handler
 from player import Player
@@ -36,6 +37,11 @@ HELP_MESSAGE = ('**!!play** *<yt-link/search-term>*: Play song from *yt-link* or
                 )
 
 def main():
+    try:
+        os.mkdir('cache')
+    except:
+        pass
+
     q = queue.Queue(1)
     t1 = threading.Thread(target=logger.initialize, args=(q,))
     t1.start()
@@ -51,13 +57,23 @@ def main():
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
-                    songDict = youtube_handler.get_video(payload)
-                    songID = songDict['id']
-                    songName = songDict['title']
-                    Player.play(f'cache/{songID}.mp3')
-                    messenger.send(f'Now Playing:\n**{songName}**')
-                    cache_manager.clean_cache()
-                    Player.on_queue = False
+                    try:
+                        int(payload)
+                    except:
+                        songDict = youtube_handler.get_video(payload)
+                        songID = songDict['id']
+                        songName = songDict['title']
+                        Player.play(f'cache/{songID}.mp3')
+                        messenger.send(f'Now Playing:\n**{songName}**')
+                        cache_manager.clean_cache()
+                        Player.on_queue = False
+                    else:
+                        songDict = Player.myQueue[int(payload) - 1]
+                        songID = songDict['id']
+                        songName = songDict['title']
+                        Player.play(f'cache/{songID}.mp3')
+                        messenger.send(f'Now Playing:\n**{songName}**')
+                        Player.on_queue = True
 
             if ADD in message:
                 payloadIndex = len(ADD) + 1
