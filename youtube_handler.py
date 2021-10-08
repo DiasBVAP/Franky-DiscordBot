@@ -6,7 +6,7 @@ import cache_manager
 import messenger
 
 
-def get_video(arg: str) -> str:
+def get_video(arg: str) -> dict:
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': 'cache/%(id)s.%(etx)s',
@@ -20,7 +20,7 @@ def get_video(arg: str) -> str:
         try:
             get(arg) 
         except:
-            video = ydl.extract_info(f"ytsearch:{arg}", download=False)['entries'][0]
+            video = ydl.extract_info(f'ytsearch:{arg}', download=False)['entries'][0]
             if cache_manager.is_in_cache(video['id']):
                 return video
             else:
@@ -33,4 +33,9 @@ def get_video(arg: str) -> str:
             else:
                 messenger.send('**Downloading . . .**')
                 ydl.download(['https://www.youtube.com/watch?v=' + video['id']])
+    return video
+
+def search(arg: str) -> dict:
+    with youtube_dl.YoutubeDL() as ydl:
+        video = ydl.extract_info(f'ytsearch:{arg}', download=False)['entries'][0]
     return video
