@@ -50,7 +50,8 @@ def initialize(q) -> None:
         event = recieve_json_response(ws)
 
         try:
-            q.put(f"{event['d']['content']}")
+            if event['d']['author']['username'] != os.environ.get('BOT_USERNAME'):
+                q.put(f"{event['d']['content']}")
             op_code = event['op']
             if op_code == 11:
                 print('heartbeat received')
