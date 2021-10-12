@@ -1,63 +1,29 @@
-from os import truncate
-from pygame import mixer
-
-class MyQueue():
-    
-    myQueue = []
-    current_song = 0
-
-    @classmethod
-    def next(cls) -> None:
-        pass
-    
-    @classmethod
-    def last(cls) -> None:
-        pass
-
-    @classmethod
-    def add(cls, songDict: dict) -> None:
-        cls.myQueue.append(songDict)
-
-    @classmethod
-    def remove(cls, songName: str) -> None:
-        pass
-
-    @classmethod
-    def get_len(cls) -> int:
-        return len(cls.myQueue)
-
-    @classmethod
-    def get_title(cls) -> str:
-        return cls.myQueue[cls.current_song]['title']
-    
+from pygame import mixer    
 
 class Player():
 
     #flags
     is_loaded = False
     is_playing = False
-    music_ended = False
     queue_looping = False
     on_queue = False
 
     #queue
+    single_song = {}
     myQueue = []
     current_song = 0
 
     @classmethod
     def update(cls) -> str:
-        if cls.is_playing and cls.is_loaded and (not mixer.music.get_busy()): 
-            cls.music_ended = True
-
-        if cls.music_ended:
+        if cls.is_playing and cls.is_loaded and (not mixer.music.get_busy()):
             if (not cls.queue_looping) and (cls.current_song == len(cls.myQueue) - 1): # If on queue, but not looping
-                return ''
+                return cls.myQueue[cls.current_song]
             if not cls.on_queue: # If not on queue
-                return ''
+                return cls.single_song
             cls.play_next()
-            cls.music_ended = False
-        if len(cls.myQueue) > 0: return cls.myQueue[cls.current_song]['title']
-        else: return ''
+        if cls.on_queue:
+            return cls.myQueue[cls.current_song]['title']
+        return cls.single_song['title']
 
     @classmethod
     def play_next(cls) -> str:
@@ -102,7 +68,7 @@ class Player():
                 cls.current_song -= 1
                 Player.play_next()
             return songName
-        else: return None
+        return None
 
     @classmethod
     def get_queue(cls) -> str:
@@ -113,8 +79,7 @@ class Player():
                 nameList.append(str(i) + '. ' + song['title'])
                 i += 1
             return '\n'.join(nameList)
-        else:
-            return 'Queue empty!'
+        return 'Queue empty!'
 
     @classmethod
     def play(cls, fileName: str) -> None:
@@ -141,6 +106,7 @@ class Player():
             cls.myQueue.clear()
             cls.current_song = 0
             cls.is_loaded = False
+            cls.is_playing = False
             return True
         return False
 

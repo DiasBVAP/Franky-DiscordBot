@@ -46,6 +46,7 @@ def main():
     t1 = threading.Thread(target=logger.initialize, args=(q,))
     t1.start()
 
+    player_initialized = False
     songName = ''
 
     while True:
@@ -63,10 +64,12 @@ def main():
                         songDict = youtube_handler.get_video(payload)
                         songID = songDict['id']
                         songName = songDict['title']
+                        Player.single_song = songDict
                         Player.play(f'cache/{songID}.mp3')
                         messenger.send(f'Now Playing:\n**{songName}**')
                         cache_manager.clean_cache()
                         Player.on_queue = False
+                        player_initialized = True
                     else:
                         songDict = Player.myQueue[int(payload) - 1]
                         songID = songDict['id']
@@ -74,6 +77,7 @@ def main():
                         Player.play(f'cache/{songID}.mp3')
                         messenger.send(f'Now Playing:\n**{songName}**')
                         Player.on_queue = True
+                        player_initialized = True
 
             if ADD in message:
                 payloadIndex = len(ADD) + 1
@@ -82,12 +86,14 @@ def main():
                 songName = Player.add_to_queue(songDict)
                 messenger.send(f'Added to queue:\n**{songName}**')
                 cache_manager.clean_cache()
+                player_initialized = True
 
             elif PAUSE in message:
                 if Player.pause(): messenger.send(f'Paused **{songName}**')
 
             elif STOP in message:
                 if Player.stop(): messenger.send('**Queue Stopped!**')
+                player_initialized = False
 
             elif LOOP in message:
                 if Player.loop(): messenger.send(f'Looping **{songName}**')
@@ -117,7 +123,7 @@ def main():
             elif HELP in message:
                 messenger.send(HELP_MESSAGE)
             
-        songName = Player.update()
+        if player_initialized: songName = Player.update()
 
 
 if __name__ == "__main__":
