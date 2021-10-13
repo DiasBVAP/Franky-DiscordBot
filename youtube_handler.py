@@ -10,6 +10,7 @@ def get_video(arg: str) -> dict:
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': 'cache/%(id)s.%(etx)s',
+        'noplaylist': True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
