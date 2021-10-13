@@ -54,7 +54,7 @@ def main():
 
             if PLAY in message:
                 if len(message) == len(PLAY):
-                    if Player.unpause(): messenger.send(f'Resuming **{songName}**')
+                    if Player.unpause(): messenger.send(f'Resuming:\n**{songName}**')
                 else:
                     payloadIndex = len(PLAY) + 1
                     payload = message[payloadIndex:]
@@ -89,14 +89,14 @@ def main():
                 player_initialized = True
 
             elif PAUSE in message:
-                if Player.pause(): messenger.send(f'Paused **{songName}**')
+                if Player.pause(): messenger.send(f'Paused:\n**{songName}**')
 
             elif STOP in message:
                 if Player.stop(): messenger.send('**Queue Stopped!**')
                 player_initialized = False
 
             elif LOOP in message:
-                if Player.loop(): messenger.send(f'Looping **{songName}**')
+                if Player.loop(): messenger.send(f'Looping:\n**{songName}**')
 
             elif NEXT in message:
                 songName = Player.play_next()
@@ -118,7 +118,10 @@ def main():
 
             elif LOOP_QUEUE in message:
                 isLooping = Player.flip_qloop()
-                messenger.send(f'Queue Looping: **{isLooping}**')
+                if isLooping:
+                    messenger.send('**Queue Looping!**')
+                else:
+                    messenger.send('**Queue NOT Looping!**')
 
             elif HELP in message:
                 messenger.send(HELP_MESSAGE)
