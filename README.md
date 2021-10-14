@@ -65,4 +65,4 @@ Now simpy join a voice call with your secondary account and run ```main.py```.
 <img src="https://github.com/AsaiOgawa/Donations/blob/main/bitcoin.png?raw=true" height=16> Bitcoin | <img src="https://github.com/AsaiOgawa/Donations/blob/main/monero.png?raw=true" height=16> Monero
 :------:|:------:
 <img src="https://github.com/AsaiOgawa/Donations/blob/main/bitcoin-qrcode.png?raw=true" width=200> | <img src="https://github.com/AsaiOgawa/Donations/blob/main/monero-qrcode.png?raw=true" width=200>
-bc1qcnwqs0t4u27fdyy82ss9pvzn062efjj8pm7f58 | 891tccnobaqJyMaAj3jvSGLgTGbzphrWncpvgKinxUpSc4av2fW<br/>ZggGabfjmDNHsv5irDPaeXZhoHSgoaVy54CbELLCXSxU
+bc1qcnwqs0t4u27fdyy82ss9pvzn062efjj8pm7f58 | 891tccnobaqJyMaAj3jvSGLgTGbzphrWncpvgKinxUpSc4av2fWZggGabfjmDNHsv5irDPaeXZhoHSgoaVy54CbELLCXSxU
