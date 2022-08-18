@@ -1,6 +1,6 @@
 # Franky-DiscordBot
 
-## Who's Franky?
+## What's Franky?
 
 Franky is a music Discord selfbot/userbot (it automates an user account to act as a bot and play music).
 
